@@ -50,7 +50,7 @@ class VistaBlackUser(Resource):
 
 
 def validar_token():
-    token_ok = os.getenv('TOKEN')
+    token_ok = os.getenv('TOKEN', "token")
     headers = request.headers.get('Authorization')
     token_request = headers.split(" ")[-1]
     if token_ok == token_request:
