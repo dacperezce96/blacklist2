@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - pip install -r requirements.txt+
+  build:
+    on-failure: ABORT
+    commands:
+      - coverage run -m --omit="*/usr/lib/*" unittest discover -s tests -v
+      - coverage report --fail-under=80
+artifacts:
+  files:
+    - '**/*'
