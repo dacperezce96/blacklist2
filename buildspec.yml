@@ -6,11 +6,12 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 468415446629.dkr.ecr.us-east-1.amazonaws.com
+      - echo Instal dependencies
+      - pip install -r requirements.txt
   build:
     on-failure: ABORT
     commands:
-      - echo Build started on 'date'
-      - echo unit test...    
+      - echo Unit test...    
       - coverage run -m --omit="*/usr/lib/*" unittest discover -s tests -v
       - coverage report --fail-under=80
       - echo Building the Docker image...          
