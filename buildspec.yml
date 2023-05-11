@@ -4,12 +4,23 @@ phases:
   pre_build:
     on-failure: ABORT
     commands:
-      - pip install -r requirements.txt
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 468415446629.dkr.ecr.us-east-1.amazonaws.com
   build:
     on-failure: ABORT
     commands:
+      - echo Build started on 'date'
+      - echo unit test...    
       - coverage run -m --omit="*/usr/lib/*" unittest discover -s tests -v
       - coverage report --fail-under=80
+      - echo Building the Docker image...          
+      - docker build -t blacklist-miso .
+      - docker tag blacklist-miso:latest 468415446629.dkr.ecr.us-east-1.amazonaws.com/blacklist-miso:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push 468415446629.dkr.ecr.us-east-1.amazonaws.com/blacklist-miso:latest
 artifacts:
   files:
     - '**/*'
