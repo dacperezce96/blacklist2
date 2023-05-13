@@ -1,0 +1,34 @@
+{
+    "executionRoleArn": "arn:aws:iam::468415446629:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+      {
+        "portMappings": [
+          {
+            "hostPort": 5000,
+            "protocol": "tcp",
+            "containerPort": 5000
+          }
+        ],
+        "environment": [
+            {
+                "name": "TOKEN",
+                "value": "token"
+            },
+            {
+                "name": "DATABASE_URL",
+                "value": "postgresql://postgres:postgres@blacklist.cfk4eod950co.us-east-1.rds.amazonaws.com:5432/postgres"
+            }
+        ],
+        "image": "<IMAGE1_NAME>",
+        "essential": true,
+        "name": "blacklist-container"
+      }
+    ],
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "512",
+    "memory": "1024",
+    "family": "blacklist-task-1"
+}

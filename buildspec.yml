@@ -22,6 +22,20 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 468415446629.dkr.ecr.us-east-1.amazonaws.com/blacklist-miso:latest
+      - echo Writing Image Definitions file...
+      - printf '[{"name":"blacklist-container","imageUri":"468415446629.dkr.ecr.us-east-1.amazonaws.com/blacklist-miso:latest"}]' > imagedefinitions.json
+      - printf '{"ImageURI":"468415446629.dkr.ecr.us-east-1.amazonaws.com/blacklist-miso:latest"}' > imageDetail.json
+      - cat imagedefinitions.json 
 artifacts:
   files:
     - '**/*'
+    - imagedefinitions.json
+    - imageDetail.json
+  secondary-artifacts:
+    DefinitionArtifact:
+      files:
+        - appspec.yaml
+        - taskdef.json
+    ImageArtifact:
+      files:
+        - imageDetail.json
