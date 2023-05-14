@@ -20,7 +20,7 @@ api.add_resource(VistaBlackUser, '/blacklists/<string:email>')
 
 @application.route("/ping")
 def index():
-    return "pong-pong",500
+    return "pong-pong",200
 
 if __name__ == "__main__":
     application.run(host = "0.0.0.0", port = 5000, debug = True)

@@ -57,4 +57,4 @@ class TestUtilidades(TestCase):
             f"/ping",
             headers={'Authorization': 'Bearer token'}
         )
-        self.assertEqual(solicitud_nuevo_usuario.status_code, 500)
+        self.assertEqual(solicitud_nuevo_usuario.status_code, 200)
